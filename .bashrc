@@ -44,8 +44,6 @@ fi
 # Navigation and editor.
 alias which='command -v'
 alias v='nvim'
-alias vim='nvim'
-alias vi='nvim'
 
 
 g()    { git "$@"; }
