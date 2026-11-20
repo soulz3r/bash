@@ -95,6 +95,20 @@ gstl() { git stash list "$@"; }
 gsta() { git stash apply "$@"; }
 gstp() { git stash pop "$@"; }
 
+# Minmax file-type colors. The indexed slots are defined by the matching
+# WezTerm color scheme, so file classes stay distinct without changing palettes.
+_minmax_ls_variant=${MINMAX_FZF_VARIANT:-phosphor}
+case "$_minmax_ls_variant" in
+    phosphor|mono|amber|oxide) ;;
+    *) _minmax_ls_variant=phosphor ;;
+esac
+
+# Directories=green, executables=amber, links=string, archives=red.
+# Keep the semantic indexed-color numbers identical across all Minmax variants.
+export LS_COLORS='di=1;38;5;19:ex=1;38;5;22:ln=1;38;5;24:or=1;38;5;25:mi=38;5;25:pi=38;5;23:so=1;38;5;23:bd=1;38;5;20:cd=1;38;5;20:su=1;38;5;25:sg=1;38;5;22:tw=1;38;5;19:ow=1;38;5;19:*.tar=1;38;5;25:*.tgz=1;38;5;25:*.arc=1;38;5;25:*.arj=1;38;5;25:*.taz=1;38;5;25:*.lha=1;38;5;25:*.lz4=1;38;5;25:*.lzh=1;38;5;25:*.lzma=1;38;5;25:*.tlz=1;38;5;25:*.txz=1;38;5;25:*.tzo=1;38;5;25:*.t7z=1;38;5;25:*.zip=1;38;5;25:*.z=1;38;5;25:*.dz=1;38;5;25:*.gz=1;38;5;25:*.lrz=1;38;5;25:*.lz=1;38;5;25:*.lzo=1;38;5;25:*.xz=1;38;5;25:*.zst=1;38;5;25:*.tzst=1;38;5;25:*.bz2=1;38;5;25:*.bz=1;38;5;25:*.tbz=1;38;5;25:*.tbz2=1;38;5;25:*.tz=1;38;5;25:*.deb=1;38;5;25:*.rpm=1;38;5;25:*.jar=1;38;5;25:*.war=1;38;5;25:*.ear=1;38;5;25:*.sar=1;38;5;25:*.rar=1;38;5;25:*.alz=1;38;5;25:*.ace=1;38;5;25:*.zoo=1;38;5;25:*.cpio=1;38;5;25:*.7z=1;38;5;25:*.rz=1;38;5;25:*.cab=1;38;5;25:*.wim=1;38;5;25:*.swm=1;38;5;25:*.dwm=1;38;5;25:*.esd=1;38;5;25:*.jpg=38;5;23:*.jpeg=38;5;23:*.png=38;5;23:*.gif=38;5;23:*.webp=38;5;23:*.bmp=38;5;23:*.svg=38;5;23:*.mp3=38;5;18:*.flac=38;5;18:*.wav=38;5;18:*.ogg=38;5;18:*.mp4=38;5;18:*.mkv=38;5;18:*.webm=38;5;18:*.pdf=38;5;17:*.md=38;5;17:*.c=38;5;17:*.h=38;5;17:*.lua=38;5;17:*.toml=38;5;17:*.json=38;5;17'
+
+unset _minmax_ls_variant
+
 # Directory listings: prefer eza, then lsd, then the system tools.
 if command -v eza >/dev/null 2>&1; then
     alias ls='eza --group-directories-first'
