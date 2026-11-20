@@ -107,13 +107,6 @@ if command -v lsd >/dev/null 2>&1; then
     alias lla='lsd --color=always --long --almost-all --group-dirs first'
     alias lt='lsd --color=always --tree --depth 2'
     alias lta='lsd --color=always --tree --all'
-elif command -v eza >/dev/null 2>&1; then
-    alias ls='eza --color=auto --group-directories-first'
-    alias ll='eza --color=auto --long --group-directories-first'
-    alias la='eza --color=auto --all --group-directories-first'
-    alias lla='eza --color=auto --long --all --group-directories-first'
-    alias lt='eza --color=auto --tree --level=2'
-    alias lta='eza --color=auto --tree --all'
 else
     alias ls='command ls --color=auto --group-directories-first'
     alias ll='ls -lh'
