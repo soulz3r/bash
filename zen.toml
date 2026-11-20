@@ -49,13 +49,6 @@ final_space = true
     background = 'transparent'
     template = '❯ '
 
-[transient_prompt]
-  foreground_templates = [
-    '{{if gt .Code 0}}#E67E80{{else}}#A7C080{{end}}',
-  ]
-  background = 'transparent'
-  template = '❯ '
-
 [secondary_prompt]
   foreground = '#D699B6'
   background = 'transparent'
