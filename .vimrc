@@ -119,5 +119,3 @@ inoremap ,, <Esc>
 xnoremap ,, <Esc>
 nnoremap ,, :nohlsearch<CR>
 
-" Restore the current file's directory as the local working directory.
-" (Use :lcd manually when you want a window-local directory instead.)
