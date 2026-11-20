@@ -10,7 +10,7 @@ WezTerm launches Git Bash with this repository's `.bashrc`:
 C:/Program Files/Git/bin/bash.exe --rcfile /d/config/bash/.bashrc -i
 ```
 
-The config initializes Git for Windows, sets missing `USER` and `LANG` defaults, and loads `ble.sh` from `~/.local/share/blesh/ble.sh` when installed. It attaches ble.sh before initializing the Fish Oh My Posh theme from `D:/config/fish/zen.toml`. This order matters: Oh My Posh detects `BLE_SESSION_ID` while generating its Bash integration and enables the transient prompt only when ble.sh is already attached.
+The config initializes Git for Windows, sets missing `USER` and `LANG` defaults, and loads `ble.sh` from `~/.local/share/blesh/ble.sh` when installed. It loads the repository's `zen.toml` for Oh My Posh from `/d/config/bash/zen.toml`. It attaches ble.sh before OMP initialization so OMP can detect `BLE_SESSION_ID` and enable its transient prompt.
 
 Install `ble.sh` separately using its [official installation instructions](https://github.com/akinomyoga/ble.sh#quick-instructions). The config initially loads it with `--attach=none`, configures the rest of the shell and fzf integrations, then calls `ble-attach` immediately before Oh My Posh initialization.
 
