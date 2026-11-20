@@ -253,6 +253,8 @@ if command -v fzf >/dev/null 2>&1; then
 fi
 
 # Oh My Posh: the only prompt provider.
+# Prevent stale inherited ble.sh state from enabling OMP's ble.sh integration.
+unset BLE_SESSION_ID
 if command -v oh-my-posh >/dev/null 2>&1; then
     _omp_theme='/d/config/bash/zen.toml'
     if [[ -r "$_omp_theme" ]]; then
