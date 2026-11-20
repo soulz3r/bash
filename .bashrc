@@ -340,9 +340,9 @@ fi
 # while generating its Bash integration and only then enables transient prompts.
 [[ ! ${BLE_VERSION-} ]] || ble-attach
 
-# Oh My Posh: use the same minimal path + Git theme as Fish.
+# Oh My Posh: load this repository's zen.toml so Bash uses the committed theme.
 if command -v oh-my-posh >/dev/null 2>&1; then
-    _omp_theme='/d/config/powershell/zen.toml'
+    _omp_theme='/d/config/bash/zen.toml'
     [[ -f "$_omp_theme" ]] && eval "$(oh-my-posh init bash --config "$_omp_theme")"
     unset _omp_theme
 fi
