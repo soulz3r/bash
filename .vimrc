@@ -64,6 +64,7 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+nnoremap <M-Tab> <C-^>
 
 " Search results stay centered.
 nnoremap n nzzzv
@@ -105,6 +106,7 @@ nnoremap <leader>q :quit<CR>
 nnoremap <leader>cd :cd %:p:h<CR>
 nnoremap <leader>e :Explore<CR>
 nnoremap <leader>nm :messages<CR>
+nnoremap <leader>ni :execute "edit" fnameescape($MYVIMRC)<CR>
 
 " Double comma exits Insert/Visual mode; in Normal mode it clears search.
 inoremap ,, <Esc>
