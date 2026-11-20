@@ -1,25 +1,3 @@
-# Git Bash configuration for WezTerm.
-# Keep Bash syntax here: this file is sourced by bash.exe --rcfile.
-
-# Git Bash may not export these by default. ble.sh expects both to be set.
-: "${USER:=$(id -un)}"
-export USER
-export LANG="${LANG:-C.UTF-8}"
-
-# Load ble.sh before prompt and Readline integrations. It is optional so the
-# shell still starts normally on machines where it has not been installed.
-if [[ $- == *i* ]]; then
-    _blesh="$HOME/.local/share/blesh/ble.sh"
-    [[ -r "$_blesh" ]] && source -- "$_blesh" --attach=none
-    unset _blesh
-fi
-
-# Initialize Git for Windows once. Avoid sourcing /etc/profile more than once.
-if [[ -z "${GIT_BASH_PROFILE_LOADED:-}" ]]; then
-    export GIT_BASH_PROFILE_LOADED=1
-    [[ -f /etc/profile ]] && source /etc/profile
-fi
-
 export EDITOR="${EDITOR:-nvim}"
 export VISUAL="${VISUAL:-$EDITOR}"
 export PAGER="${PAGER:-less}"
@@ -56,25 +34,6 @@ elif command -v rg >/dev/null 2>&1; then
     export FZF_CTRL_T_COMMAND="${FZF_CTRL_T_COMMAND:-$FZF_DEFAULT_COMMAND}"
 fi
 
-# fzf bindings. ble.sh requires its own integration instead of fzf --bash.
-if command -v fzf >/dev/null 2>&1; then
-    if [[ ${BLE_VERSION-} ]]; then
-        ble-import -d integration/fzf-completion 2>/dev/null || :
-        ble-import -d integration/fzf-key-bindings 2>/dev/null || :
-    elif fzf --bash >/dev/null 2>&1; then
-        eval "$(fzf --bash)"
-    else
-        __fzf_history() {
-            local selected
-            selected=$(history | sed -E 's/^[[:space:]]*[0-9]+[[:space:]]*//' |
-                tac | awk 'NF && !seen[$0]++' |
-                fzf --no-sort --query="${READLINE_LINE:-}") || return
-            READLINE_LINE=$selected
-            READLINE_POINT=${#READLINE_LINE}
-        }
-        bind -x '"\C-r": __fzf_history'
-    fi
-fi
 
 # Navigation and editor.
 alias which='command -v'
@@ -82,22 +41,7 @@ alias v='nvim'
 alias vim='nvim'
 alias vi='nvim'
 
-mkcd() {
-    [[ $# -gt 0 ]] || { printf 'Usage: mkcd <directory>\n' >&2; return 2; }
-    mkdir -p -- "$*" && cd -- "$*"
-}
 
-croot() {
-    local root
-    root=$(git rev-parse --show-toplevel 2>/dev/null) || {
-        printf 'croot: not inside a Git repository\n' >&2
-        return 1
-    }
-    cd -- "$root"
-}
-
-# Git abbreviations from the Fish configuration, implemented as Bash functions.
-# Bash has no native abbreviation expansion, so these preserve the same command names.
 g()    { git "$@"; }
 ga()   { git add "$@"; }
 gaa()  { git add --all "$@"; }
@@ -150,39 +94,6 @@ else
     alias lla='ls -lah'
 fi
 
-# bat, fd, ripgrep, Cargo and YAP shortcuts.
-if command -v bat >/dev/null 2>&1; then
-    alias cat='bat'
-    alias catp='bat --style=plain'
-    alias catn='bat --style=numbers'
-elif command -v batcat >/dev/null 2>&1; then
-    alias cat='batcat'
-    alias catp='batcat --style=plain'
-    alias catn='batcat --style=numbers'
-fi
-
-if command -v fd >/dev/null 2>&1; then
-    alias fdh='fd --hidden'
-    alias fda='fd --hidden --no-ignore'
-    alias fdi='fd --type=f'
-    alias fdd='fd --type=d'
-fi
-
-if command -v rg >/dev/null 2>&1; then
-    alias grep='rg'
-    alias rgi='rg --ignore-case'
-    alias rga='rg --hidden --no-ignore'
-    alias rgf='rg --files'
-fi
-
-if command -v cargo >/dev/null 2>&1; then
-    c() { cargo "$@"; }
-    cb() { cargo build "$@"; }
-    cbr() { cargo build --release "$@"; }
-    cr() { cargo run "$@"; }
-    ct() { cargo test "$@"; }
-    cchk() { cargo check "$@"; }
-fi
 
 if command -v yap >/dev/null 2>&1; then
     y() { yap "$@"; }
