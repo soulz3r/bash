@@ -19,6 +19,7 @@ The config keeps Bash history, Git shortcuts, fzf workflows and optional tool in
 - eza or lsd directory listings, with system `ls` fallbacks.
 - bat, fd, ripgrep, Neovim, Cargo, YAP and zoxide integrations when installed.
 - Persistent Bash history.
+- Minimal Vim config in `.vimrc` (symlink it to `~/.vimrc`).
 - WezTerm shell integration when its script is available.
 
 ## Git shortcuts
@@ -49,7 +50,8 @@ Bash does not have Fish-style abbreviation expansion. The same command names are
 | `fdh`, `fda`, `fdi`, `fdd` | fd variants |
 | `grep`, `rgi`, `rga`, `rgf` | ripgrep variants |
 | `c`, `cb`, `cbr`, `cr`, `ct`, `cchk` | Cargo |
-| `v`, `vim`, `vi` | Neovim |
+| `v` | Neovim |
+| `vim`, `vi` | system Vim |
 | `y`, `yap` | YAP |
 | `mkcd`, `croot` | create-and-enter directory / Git root |
 | `fcd`, `cproj`, `fopen`, `tfiles`, `frg` | fuzzy navigation and file/content search |
