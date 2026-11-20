@@ -1,6 +1,14 @@
 # Git Bash configuration for WezTerm.
 # Keep Bash syntax here: this file is sourced by bash.exe --rcfile.
 
+# Load ble.sh before prompt and Readline integrations. It is optional so the
+# shell still starts normally on machines where it has not been installed.
+if [[ $- == *i* ]]; then
+    _blesh="$HOME/.local/share/blesh/ble.sh"
+    [[ -r "$_blesh" ]] && source -- "$_blesh" --attach=none
+    unset _blesh
+fi
+
 # Initialize Git for Windows once. Avoid sourcing /etc/profile more than once.
 if [[ -z "${GIT_BASH_PROFILE_LOADED:-}" ]]; then
     export GIT_BASH_PROFILE_LOADED=1
@@ -43,9 +51,12 @@ elif command -v rg >/dev/null 2>&1; then
     export FZF_CTRL_T_COMMAND="${FZF_CTRL_T_COMMAND:-$FZF_DEFAULT_COMMAND}"
 fi
 
-# Native fzf Bash bindings (Ctrl-R, Ctrl-T, Alt-C) when supported.
+# fzf bindings. ble.sh requires its own integration instead of fzf --bash.
 if command -v fzf >/dev/null 2>&1; then
-    if fzf --bash >/dev/null 2>&1; then
+    if [[ ${BLE_VERSION-} ]]; then
+        ble-import -d integration/fzf-completion 2>/dev/null || :
+        ble-import -d integration/fzf-key-bindings 2>/dev/null || :
+    elif fzf --bash >/dev/null 2>&1; then
         eval "$(fzf --bash)"
     else
         __fzf_history() {
@@ -326,3 +337,6 @@ if [[ -n "${WEZTERM_PANE:-}" ]]; then
     done
     unset _wezterm_integration
 fi
+
+# Attach ble.sh after all shell settings and prompt integrations are initialized.
+[[ ! ${BLE_VERSION-} ]] || ble-attach
