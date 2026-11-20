@@ -1,6 +1,11 @@
 # Git Bash configuration for WezTerm.
 # Keep Bash syntax here: this file is sourced by bash.exe --rcfile.
 
+# Git Bash may not export these by default. ble.sh expects both to be set.
+: "${USER:=$(id -un)}"
+export USER
+export LANG="${LANG:-C.UTF-8}"
+
 # Load ble.sh before prompt and Readline integrations. It is optional so the
 # shell still starts normally on machines where it has not been installed.
 if [[ $- == *i* ]]; then
@@ -317,13 +322,6 @@ fmenu() {
     esac
 }
 
-# Oh My Posh: use the same minimal path + Git theme as Fish.
-if command -v oh-my-posh >/dev/null 2>&1; then
-    _omp_theme='/d/config/fish/zen.toml'
-    [[ -f "$_omp_theme" ]] && eval "$(oh-my-posh init bash --config "$_omp_theme")"
-    unset _omp_theme
-fi
-
 # WezTerm integration is optional.
 if [[ -n "${WEZTERM_PANE:-}" ]]; then
     for _wezterm_integration in \
@@ -338,5 +336,13 @@ if [[ -n "${WEZTERM_PANE:-}" ]]; then
     unset _wezterm_integration
 fi
 
-# Attach ble.sh after all shell settings and prompt integrations are initialized.
+# Attach ble.sh before initializing Oh My Posh. OMP detects BLE_SESSION_ID
+# while generating its Bash integration and only then enables transient prompts.
 [[ ! ${BLE_VERSION-} ]] || ble-attach
+
+# Oh My Posh: use the same minimal path + Git theme as Fish.
+if command -v oh-my-posh >/dev/null 2>&1; then
+    _omp_theme='/d/config/fish/zen.toml'
+    [[ -f "$_omp_theme" ]] && eval "$(oh-my-posh init bash --config "$_omp_theme")"
+    unset _omp_theme
+fi
