@@ -10,7 +10,11 @@ WezTerm launches Git Bash with this repository's `.bashrc`:
 C:/Program Files/Git/bin/bash.exe --rcfile /d/config/bash/.bashrc -i
 ```
 
-The config initializes Git for Windows, then loads the Fish Oh My Posh theme from `D:/config/fish/zen.toml`.
+The config initializes Git for Windows, loads `ble.sh` from `~/.local/share/blesh/ble.sh` when installed, then loads the Fish Oh My Posh theme from `D:/config/fish/zen.toml`. Oh My Posh detects the active `ble.sh` session and enables its transient prompt, so completed commands leave only the minimal `❯` prompt.
+
+Install `ble.sh` separately using its [official installation instructions](https://github.com/akinomyoga/ble.sh#quick-instructions). The config loads it with `--attach=none` before the other shell integrations and calls `ble-attach` at the end of startup.
+
+When `ble.sh` is active, fzf uses the `ble.sh`-compatible `integration/fzf-completion` and `integration/fzf-key-bindings` modules instead of `fzf --bash`, which is not compatible with `ble.sh`'s line editor. Without `ble.sh`, the normal `fzf --bash` bindings are used.
 
 ## Included tools
 
