@@ -16,7 +16,7 @@ The config keeps Bash history, Git shortcuts, fzf workflows and optional tool in
 
 - Oh My Posh with the shared path and Git prompt.
 - fzf defaults and native Bash key bindings (Ctrl+R, Ctrl+T, Alt+C).
-- eza or lsd directory listings, with system `ls` fallbacks.
+- lsd directory listings, with eza and system `ls` fallbacks.
 - bat, fd, ripgrep, Neovim, Cargo, YAP and zoxide integrations when installed.
 - Persistent Bash history.
 - Minimal Vim config in `.vimrc` (symlink it to `~/.vimrc`).
@@ -55,7 +55,7 @@ Bash does not have Fish-style abbreviation expansion. The same command names are
 
 | Command | Action |
 | --- | --- |
-| `ls`, `ll`, `la`, `lla`, `lt`, `lta` | eza, lsd or standard listings |
+| `ls`, `ll`, `la`, `lla`, `lt`, `lta` | lsd, eza or standard listings |
 | `cat`, `catp`, `catn` | bat or batcat |
 | `fdh`, `fda`, `fdi`, `fdd` | fd variants |
 | `grep`, `rgi`, `rga`, `rgf` | ripgrep variants |
