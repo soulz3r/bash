@@ -51,6 +51,14 @@ set timeoutlen=500
 set autoread
 set hidden
 
+" Let Vim control the terminal cursor shape in WezTerm.
+" Normal mode: steady block. Insert mode: steady bar. Replace mode: underline.
+if &term =~# 'xterm'
+    let &t_EI = "\e[2 q"
+    let &t_SI = "\e[6 q"
+    let &t_SR = "\e[4 q"
+endif
+
 " Terminal and clipboard.
 set mouse=a
 set termguicolors
