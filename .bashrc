@@ -31,6 +31,24 @@ done
 export FZF_DEFAULT_OPTS
 unset _fzf_defaults _option _name
 
+# Minmax fzf palette. Set MINMAX_DIR if the theme repository lives elsewhere.
+_minmax_dir=${MINMAX_DIR:-}
+if [[ -z "$_minmax_dir" ]]; then
+    for _candidate in /d/projects/minmax.nvim /d/config/minmax.nvim "$HOME/projects/minmax.nvim"; do
+        if [[ -r "$_candidate/ports/fzf/minmax-phosphor.sh" ]]; then
+            _minmax_dir=$_candidate
+            break
+        fi
+    done
+fi
+
+_minmax_variant=${MINMAX_FZF_VARIANT:-phosphor}
+_minmax_theme="$_minmax_dir/ports/fzf/minmax-$_minmax_variant.sh"
+if [[ -n "$_minmax_dir" && -r "$_minmax_theme" ]]; then
+    source "$_minmax_theme"
+fi
+unset _minmax_dir _minmax_variant _minmax_theme _candidate
+
 if command -v fd >/dev/null 2>&1; then
     export FZF_DEFAULT_COMMAND="${FZF_DEFAULT_COMMAND:-fd --type f --hidden --exclude .git}"
     export FZF_CTRL_T_COMMAND="${FZF_CTRL_T_COMMAND:-$FZF_DEFAULT_COMMAND}"
