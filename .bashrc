@@ -100,6 +100,9 @@ gstp() { git stash pop "$@"; }
 # Directories=green, executables=amber, links=string, archives=red.
 # Keep the semantic indexed-color numbers identical across all Minmax variants.
 export LS_COLORS='di=1;38;5;23:ex=1;38;5;25:ln=1;38;5;24:or=1;38;5;25:mi=38;5;25:pi=1;38;5;22:so=1;38;5;22:bd=1;38;5;20:cd=1;38;5;20:su=1;38;5;25:sg=1;38;5;22:tw=1;38;5;23:ow=1;38;5;23:*.tar=1;38;5;22:*.tgz=1;38;5;22:*.arc=1;38;5;22:*.arj=1;38;5;22:*.taz=1;38;5;22:*.lha=1;38;5;22:*.lz4=1;38;5;22:*.lzh=1;38;5;22:*.lzma=1;38;5;22:*.tlz=1;38;5;22:*.txz=1;38;5;22:*.tzo=1;38;5;22:*.t7z=1;38;5;22:*.zip=1;38;5;22:*.z=1;38;5;22:*.dz=1;38;5;22:*.gz=1;38;5;22:*.lrz=1;38;5;22:*.lz=1;38;5;22:*.lzo=1;38;5;22:*.xz=1;38;5;22:*.zst=1;38;5;22:*.tzst=1;38;5;22:*.bz2=1;38;5;22:*.bz=1;38;5;22:*.tbz=1;38;5;22:*.tbz2=1;38;5;22:*.tz=1;38;5;22:*.deb=1;38;5;22:*.rpm=1;38;5;22:*.jar=1;38;5;22:*.war=1;38;5;22:*.ear=1;38;5;22:*.sar=1;38;5;22:*.rar=1;38;5;22:*.alz=1;38;5;22:*.ace=1;38;5;22:*.zoo=1;38;5;22:*.cpio=1;38;5;22:*.7z=1;38;5;22:*.rz=1;38;5;22:*.cab=1;38;5;22:*.wim=1;38;5;22:*.swm=1;38;5;22:*.dwm=1;38;5;22:*.esd=1;38;5;22:*.jpg=38;5;19:*.jpeg=38;5;19:*.png=38;5;19:*.gif=38;5;19:*.webp=38;5;19:*.bmp=38;5;19:*.svg=38;5;19:*.mp3=38;5;20:*.flac=38;5;20:*.wav=38;5;20:*.ogg=38;5;20:*.mp4=38;5;20:*.mkv=38;5;20:*.webm=38;5;20:*.pdf=38;5;21:*.md=38;5;17:*.c=38;5;17:*.h=38;5;17:*.lua=38;5;17:*.toml=38;5;17:*.json=38;5;17'
+# eza has a separate override variable; set its file-kind colors explicitly too.
+export EZA_COLORS='di=1;38;5;23:ex=1;38;5;25:ln=1;38;5;24:or=1;38;5;25:pi=1;38;5;22:so=1;38;5;22:bd=1;38;5;20:cd=1;38;5;20:su=1;38;5;25:sg=1;38;5;22:tw=1;38;5;23:ow=1;38;5;23'
+
 
 # Directory listings: prefer eza, then lsd, then the system tools.
 if command -v eza >/dev/null 2>&1; then
