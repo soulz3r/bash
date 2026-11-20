@@ -2,23 +2,23 @@
 # Keep Bash syntax here: this file is sourced by bash.exe --rcfile.
 
 # Initialize Git for Windows once. Avoid sourcing /etc/profile more than once.
-if [[ -z "\${GIT_BASH_PROFILE_LOADED:-}" ]]; then
+if [[ -z "${GIT_BASH_PROFILE_LOADED:-}" ]]; then
     export GIT_BASH_PROFILE_LOADED=1
     [[ -f /etc/profile ]] && source /etc/profile
 fi
 
-export EDITOR="\${EDITOR:-nvim}"
-export VISUAL="\${VISUAL:-$EDITOR}"
-export PAGER="\${PAGER:-less}"
-export MANPAGER="\${MANPAGER:-less -R}"
-export PROJECTS_DIR="\${PROJECTS_DIR:-$HOME/projects}"
+export EDITOR="${EDITOR:-nvim}"
+export VISUAL="${VISUAL:-$EDITOR}"
+export PAGER="${PAGER:-less}"
+export MANPAGER="${MANPAGER:-less -R}"
+export PROJECTS_DIR="${PROJECTS_DIR:-$HOME/projects}"
 
 # History.
 HISTCONTROL=ignoreboth
 HISTSIZE=10000
 HISTFILESIZE=20000
 shopt -s histappend checkwinsize
-PROMPT_COMMAND="history -a; history -n\${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
+PROMPT_COMMAND="history -a; history -n${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
 
 # FZF defaults. Do not overwrite options supplied by the user.
 _fzf_defaults=(
@@ -27,20 +27,20 @@ _fzf_defaults=(
     '--border=rounded'
     '--info=inline'
 )
-for _option in "\${_fzf_defaults[@]}"; do
-    _name=\${_option%%=*}
-    [[ " \${FZF_DEFAULT_OPTS:-} " == *" \${_name}"* ]] || FZF_DEFAULT_OPTS="\${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }$_option"
+for _option in "${_fzf_defaults[@]}"; do
+    _name=${_option%%=*}
+    [[ " ${FZF_DEFAULT_OPTS:-} " == *" ${_name}"* ]] || FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }$_option"
 done
 export FZF_DEFAULT_OPTS
 unset _fzf_defaults _option _name
 
 if command -v fd >/dev/null 2>&1; then
-    export FZF_DEFAULT_COMMAND="\${FZF_DEFAULT_COMMAND:-fd --type f --hidden --exclude .git}"
-    export FZF_CTRL_T_COMMAND="\${FZF_CTRL_T_COMMAND:-$FZF_DEFAULT_COMMAND}"
-    export FZF_ALT_C_COMMAND="\${FZF_ALT_C_COMMAND:-fd --type d --hidden --exclude .git}"
+    export FZF_DEFAULT_COMMAND="${FZF_DEFAULT_COMMAND:-fd --type f --hidden --exclude .git}"
+    export FZF_CTRL_T_COMMAND="${FZF_CTRL_T_COMMAND:-$FZF_DEFAULT_COMMAND}"
+    export FZF_ALT_C_COMMAND="${FZF_ALT_C_COMMAND:-fd --type d --hidden --exclude .git}"
 elif command -v rg >/dev/null 2>&1; then
-    export FZF_DEFAULT_COMMAND="\${FZF_DEFAULT_COMMAND:-rg --files --hidden -g '!.git'}"
-    export FZF_CTRL_T_COMMAND="\${FZF_CTRL_T_COMMAND:-$FZF_DEFAULT_COMMAND}"
+    export FZF_DEFAULT_COMMAND="${FZF_DEFAULT_COMMAND:-rg --files --hidden -g '!.git'}"
+    export FZF_CTRL_T_COMMAND="${FZF_CTRL_T_COMMAND:-$FZF_DEFAULT_COMMAND}"
 fi
 
 # Native fzf Bash bindings (Ctrl-R, Ctrl-T, Alt-C) when supported.
@@ -52,9 +52,9 @@ if command -v fzf >/dev/null 2>&1; then
             local selected
             selected=$(history | sed -E 's/^[[:space:]]*[0-9]+[[:space:]]*//' |
                 tac | awk 'NF && !seen[$0]++' |
-                fzf --no-sort --query="\${READLINE_LINE:-}") || return
+                fzf --no-sort --query="${READLINE_LINE:-}") || return
             READLINE_LINE=$selected
-            READLINE_POINT=\${#READLINE_LINE}
+            READLINE_POINT=${#READLINE_LINE}
         }
         bind -x '"\C-r": __fzf_history'
     fi
@@ -214,7 +214,7 @@ __project_dirs() {
 
 cproj() {
     __require_fzf cproj || return
-    local root=\${PROJECTS_DIR:-"$HOME/projects"} directory
+    local root=${PROJECTS_DIR:-"$HOME/projects"} directory
     [[ -d "$root" ]] || { printf 'cproj: project directory not found: %s\n' "$root" >&2; return 1; }
     directory=$(__project_dirs "$root" | fzf --prompt='project > ' \
         --preview='lsd --tree --depth 2 --color=always {} 2>/dev/null || find {} -maxdepth 2 -print 2>/dev/null | head -80') || return
@@ -224,7 +224,7 @@ cproj() {
 fopen() {
     __require_fzf fopen || return
     command -v nvim >/dev/null 2>&1 || { printf 'fopen: nvim is not installed\n' >&2; return 127; }
-    local root=\${1:-.} file
+    local root=${1:-.} file
     [[ -d "$root" ]] || { printf 'fopen: directory not found: %s\n' "$root" >&2; return 1; }
     if command -v fd >/dev/null 2>&1; then
         file=$(fd --type f --hidden --exclude .git . "$root" |
@@ -283,7 +283,7 @@ fshow() {
     local entry hash
     entry=$(git log -80 --format='%h %s' |
         fzf --prompt='commit > ' --preview='git show --color=always --stat --patch {1}') || return
-    hash=\${entry%% *}
+    hash=${entry%% *}
     [[ -n "$hash" ]] && git show "$hash"
 }
 
@@ -314,7 +314,7 @@ if command -v oh-my-posh >/dev/null 2>&1; then
 fi
 
 # WezTerm integration is optional.
-if [[ -n "\${WEZTERM_PANE:-}" ]]; then
+if [[ -n "${WEZTERM_PANE:-}" ]]; then
     for _wezterm_integration in \
         '/c/Program Files/WezTerm/shell-integration/wezterm.sh' \
         '/c/Program Files/WezTerm/share/wezterm/shell-integration/wezterm.sh' \
