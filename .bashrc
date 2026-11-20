@@ -9,7 +9,8 @@ HISTCONTROL=ignoreboth
 HISTSIZE=10000
 HISTFILESIZE=20000
 shopt -s histappend checkwinsize
-PROMPT_COMMAND="history -a; history -n${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
+# Keep inherited prompt hooks out of this shell. Terminal integrations are added below.
+PROMPT_COMMAND='history -a; history -n'
 
 # FZF defaults. Do not overwrite options supplied by the user.
 _fzf_defaults=(
