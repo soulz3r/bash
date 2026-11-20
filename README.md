@@ -22,6 +22,16 @@ The config keeps Bash history, Git shortcuts, fzf workflows and optional tool in
 - Minimal Vim config in `.vimrc` (symlink it to `~/.vimrc`).
 - WezTerm shell integration when its script is available.
 
+## Vim configuration
+
+The repository includes a minimal `.vimrc` adapted from CVIM's core options and keymaps. Link it on Git Bash with:
+
+```bash
+ln -sfn /d/config/bash/.vimrc ~/.vimrc
+```
+
+The Vim config includes relative/absolute line numbers, two-space indentation, search behavior, split/window navigation, centered search results, line movement, and the shared `,,` escape mapping. Neovim-only LSP, DAP, plugin, and UI mappings are not copied because plain Vim does not provide those CVIM features.
+
 ## Git shortcuts
 
 Bash does not have Fish-style abbreviation expansion. The same command names are provided as small functions instead.
