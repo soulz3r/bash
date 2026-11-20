@@ -247,8 +247,12 @@ if [[ -n "${WEZTERM_PANE:-}" ]]; then
     unset _wezterm_integration
 fi
 
-# Oh My Posh: use the committed theme with the full Git Bash path.
-# Initialize it before ble-attach so ble.sh can wrap the finished prompt setup.
+# fzf: Bash key bindings and completion (Ctrl+R, Ctrl+T, Alt+C).
+if command -v fzf >/dev/null 2>&1; then
+    eval "$(fzf --bash)"
+fi
+
+# Oh My Posh: the only prompt provider.
 if command -v oh-my-posh >/dev/null 2>&1; then
     _omp_theme='/d/config/bash/zen.toml'
     if [[ -r "$_omp_theme" ]]; then
@@ -258,6 +262,3 @@ if command -v oh-my-posh >/dev/null 2>&1; then
     fi
     unset _omp_theme
 fi
-
-# ble.sh must attach at the end of .bashrc.
-[[ ! ${BLE_VERSION-} ]] || ble-attach
