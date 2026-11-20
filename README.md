@@ -10,9 +10,9 @@ WezTerm launches Git Bash with this repository's `.bashrc`:
 C:/Program Files/Git/bin/bash.exe --rcfile /d/config/bash/.bashrc -i
 ```
 
-The config initializes Git for Windows, sets missing `USER` and `LANG` defaults, and loads `ble.sh` from `~/.local/share/blesh/ble.sh` when installed. It loads the repository's `zen.toml` for Oh My Posh from `/d/config/bash/zen.toml`. It attaches ble.sh before OMP initialization so OMP can detect `BLE_SESSION_ID` and enable its transient prompt.
+The config initializes Git for Windows, sets missing `USER` and `LANG` defaults, and loads `ble.sh` from `~/.local/share/blesh/ble.sh` when installed. It loads the repository's `zen.toml` for Oh My Posh from `/d/config/bash/zen.toml`. Oh My Posh is initialized with the repository's `zen.toml` before `ble-attach`; ble.sh is attached at the end of `.bashrc` as required by its startup sequence.
 
-Install `ble.sh` separately using its [official installation instructions](https://github.com/akinomyoga/ble.sh#quick-instructions). The config initially loads it with `--attach=none`, configures the rest of the shell and fzf integrations, then calls `ble-attach` immediately before Oh My Posh initialization.
+Install `ble.sh` separately using its [official installation instructions](https://github.com/akinomyoga/ble.sh#quick-instructions). The config initially loads it with `--attach=none`, configures the rest of the shell and fzf integrations, then initializes Oh My Posh, and finally calls `ble-attach` as the last startup step.
 
 When `ble.sh` is active, fzf uses the `ble.sh`-compatible `integration/fzf-completion` and `integration/fzf-key-bindings` modules instead of `fzf --bash`, which is not compatible with `ble.sh`'s line editor. Without `ble.sh`, the normal `fzf --bash` bindings are used.
 
