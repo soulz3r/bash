@@ -95,30 +95,25 @@ gstl() { git stash list "$@"; }
 gsta() { git stash apply "$@"; }
 gstp() { git stash pop "$@"; }
 
-# Minmax file-type colors. These indexed slots are defined by the matching
-# WezTerm color scheme, so directories, executables and file classes differ.
-# Directories=bright accent, executables=red, links=string, archives=accent.
-# Keep the semantic indexed-color numbers identical across all Minmax variants.
+# Minmax file-type colors use the indexed palette in the active WezTerm scheme.
 export LS_COLORS='di=1;38;5;19:ex=1;38;5;22:ln=1;38;5;24:or=1;38;5;25:mi=38;5;25:pi=1;38;5;23:so=1;38;5;23:bd=1;38;5;20:cd=1;38;5;20:su=1;38;5;25:sg=1;38;5;22:tw=1;38;5;19:ow=1;38;5;19:*.tar=1;38;5;25:*.tgz=1;38;5;25:*.arc=1;38;5;25:*.arj=1;38;5;25:*.taz=1;38;5;25:*.lha=1;38;5;25:*.lz4=1;38;5;25:*.lzh=1;38;5;25:*.lzma=1;38;5;25:*.tlz=1;38;5;25:*.txz=1;38;5;25:*.tzo=1;38;5;25:*.t7z=1;38;5;25:*.zip=1;38;5;25:*.z=1;38;5;25:*.dz=1;38;5;25:*.gz=1;38;5;25:*.lrz=1;38;5;25:*.lz=1;38;5;25:*.lzo=1;38;5;25:*.xz=1;38;5;25:*.zst=1;38;5;25:*.tzst=1;38;5;25:*.bz2=1;38;5;25:*.bz=1;38;5;25:*.tbz=1;38;5;25:*.tbz2=1;38;5;25:*.tz=1;38;5;25:*.deb=1;38;5;25:*.rpm=1;38;5;25:*.jar=1;38;5;25:*.war=1;38;5;25:*.ear=1;38;5;25:*.sar=1;38;5;25:*.rar=1;38;5;25:*.alz=1;38;5;25:*.ace=1;38;5;25:*.zoo=1;38;5;25:*.cpio=1;38;5;25:*.7z=1;38;5;25:*.rz=1;38;5;25:*.cab=1;38;5;25:*.wim=1;38;5;25:*.swm=1;38;5;25:*.dwm=1;38;5;25:*.esd=1;38;5;25:*.jpg=38;5;23:*.jpeg=38;5;23:*.png=38;5;23:*.gif=38;5;23:*.webp=38;5;23:*.bmp=38;5;23:*.svg=38;5;23:*.mp3=38;5;18:*.flac=38;5;18:*.wav=38;5;18:*.ogg=38;5;18:*.mp4=38;5;18:*.mkv=38;5;18:*.webm=38;5;18:*.pdf=38;5;17:*.md=38;5;17:*.c=38;5;17:*.h=38;5;17:*.lua=38;5;17:*.toml=38;5;17:*.json=38;5;17'
-# eza has a separate override variable; set its file-kind colors explicitly too.
-export EZA_COLORS='di=1;38;5;23:ex=1;38;5;25:ln=1;38;5;24:or=1;38;5;25:pi=1;38;5;22:so=1;38;5;22:bd=1;38;5;20:cd=1;38;5;20:su=1;38;5;25:sg=1;38;5;22:tw=1;38;5;23:ow=1;38;5;23'
 
 
-# Directory listings: prefer eza, then lsd, then the system tools.
-if command -v eza >/dev/null 2>&1; then
-    alias ls='eza --color=auto --group-directories-first'
-    alias ll='eza --color=auto --long --group-directories-first'
-    alias la='eza --color=auto --all --group-directories-first'
-    alias lla='eza --color=auto --long --all --group-directories-first'
-    alias lt='eza --color=auto --tree --level=2'
-    alias lta='eza --color=auto --tree --all'
-elif command -v lsd >/dev/null 2>&1; then
+# Directory listings: prefer lsd, then eza, then the system tools.
+if command -v lsd >/dev/null 2>&1; then
     alias ls='lsd --color=always --group-dirs first'
     alias ll='lsd --color=always --long --group-dirs first'
     alias la='lsd --color=always --almost-all --group-dirs first'
     alias lla='lsd --color=always --long --almost-all --group-dirs first'
     alias lt='lsd --color=always --tree --depth 2'
     alias lta='lsd --color=always --tree --all'
+elif command -v eza >/dev/null 2>&1; then
+    alias ls='eza --color=auto --group-directories-first'
+    alias ll='eza --color=auto --long --group-directories-first'
+    alias la='eza --color=auto --all --group-directories-first'
+    alias lla='eza --color=auto --long --all --group-directories-first'
+    alias lt='eza --color=auto --tree --level=2'
+    alias lta='eza --color=auto --tree --all'
 else
     alias ls='command ls --color=auto --group-directories-first'
     alias ll='ls -lh'
