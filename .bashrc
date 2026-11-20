@@ -235,11 +235,6 @@ fmenu() {
 }
 
 
-# fzf: Bash key bindings and completion (Ctrl+R, Ctrl+T, Alt+C).
-if command -v fzf >/dev/null 2>&1; then
-    eval "$(fzf --bash)"
-fi
-
 # Oh My Posh: the only prompt provider.
 if command -v oh-my-posh >/dev/null 2>&1; then
     _omp_theme='/d/config/bash/zen.toml'
