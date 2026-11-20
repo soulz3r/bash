@@ -12,6 +12,11 @@ shopt -s histappend checkwinsize
 # Keep inherited prompt hooks out of this shell. Terminal integrations are added below.
 PROMPT_COMMAND='history -a; history -n'
 
+# fzf shell integration: Ctrl+R, Ctrl+T, and Alt+C.
+if command -v fzf >/dev/null 2>&1; then
+    eval "$(fzf --bash)"
+fi
+
 # FZF defaults. Do not overwrite options supplied by the user.
 _fzf_defaults=(
     '--height=60%'
