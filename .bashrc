@@ -183,9 +183,12 @@ fopen() {
     if command -v fd >/dev/null 2>&1; then
         file=$(fd --type f --hidden --exclude .git . "$root" |
             fzf --prompt='open > ' --preview='bat --style=numbers --color=always --line-range=:300 {} 2>/dev/null || sed -n "1,200p" {}') || return
-    else
+    elif command -v rg >/dev/null 2>&1; then
         file=$(rg --files --hidden -g '!.git' "$root" 2>/dev/null |
             fzf --prompt='open > ' --preview='bat --style=numbers --color=always --line-range=:300 {} 2>/dev/null || sed -n "1,200p" {}') || return
+    else
+        printf 'fopen: fd or ripgrep is required for file discovery\n' >&2
+        return 127
     fi
     [[ -n "$file" ]] && nvim -- "$file"
 }
