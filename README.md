@@ -16,7 +16,7 @@ Minimal Git Bash configuration for WezTerm on Windows.
 The WezTerm configuration launches Git Bash directly with this repository's `.bashrc`:
 
 ```text
-C:/Program Files/Git/bin/bash.exe --rcfile D:/config/bash/.bashrc -i
+C:/Program Files/Git/bin/bash.exe --rcfile /d/config/bash/.bashrc -i
 ```
 
 The config sources Git for Windows' `/etc/profile` before applying these settings, so PATH and MSYS environment setup are retained.
