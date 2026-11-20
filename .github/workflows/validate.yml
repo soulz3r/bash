@@ -1,0 +1,15 @@
+name: Validate Bash configuration
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  bash:
+    name: Bash syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse Bash configuration
+        run: bash -n .bashrc
