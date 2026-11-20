@@ -342,7 +342,7 @@ fi
 
 # Oh My Posh: use the same minimal path + Git theme as Fish.
 if command -v oh-my-posh >/dev/null 2>&1; then
-    _omp_theme='/d/config/fish/zen.toml'
+    _omp_theme='/d/config/powershell/zen.toml'
     [[ -f "$_omp_theme" ]] && eval "$(oh-my-posh init bash --config "$_omp_theme")"
     unset _omp_theme
 fi
