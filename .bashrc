@@ -234,19 +234,6 @@ fmenu() {
     esac
 }
 
-# WezTerm integration is optional.
-if [[ -n "${WEZTERM_PANE:-}" ]]; then
-    for _wezterm_integration in \
-        '/c/Program Files/WezTerm/shell-integration/wezterm.sh' \
-        '/c/Program Files/WezTerm/share/wezterm/shell-integration/wezterm.sh' \
-        '/c/Program Files/WezTerm/wezterm/shell-integration/wezterm.sh'; do
-        if [[ -f "$_wezterm_integration" ]]; then
-            source "$_wezterm_integration"
-            break
-        fi
-    done
-    unset _wezterm_integration
-fi
 
 # fzf: Bash key bindings and completion (Ctrl+R, Ctrl+T, Alt+C).
 if command -v fzf >/dev/null 2>&1; then
@@ -254,8 +241,6 @@ if command -v fzf >/dev/null 2>&1; then
 fi
 
 # Oh My Posh: the only prompt provider.
-# Prevent stale inherited ble.sh state from enabling OMP's ble.sh integration.
-unset BLE_SESSION_ID
 if command -v oh-my-posh >/dev/null 2>&1; then
     _omp_theme='/d/config/bash/zen.toml'
     if [[ -r "$_omp_theme" ]]; then
