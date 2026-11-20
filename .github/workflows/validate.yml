@@ -13,3 +13,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Parse Bash configuration
         run: bash -n .bashrc
+
+      - name: Smoke-test startup without optional tools
+        run: |
+          bash --noprofile --norc -c '
+            source .bashrc
+            for name in fcd cproj fopen tfiles frg fbr fbd fshow fmenu; do
+              declare -F "$name" >/dev/null || exit 1
+            done
+            [[ -n "$PROJECTS_DIR" ]]
+            alias ls >/dev/null
+          '
