@@ -336,13 +336,17 @@ if [[ -n "${WEZTERM_PANE:-}" ]]; then
     unset _wezterm_integration
 fi
 
-# Attach ble.sh before initializing Oh My Posh. OMP detects BLE_SESSION_ID
-# while generating its Bash integration and only then enables transient prompts.
-[[ ! ${BLE_VERSION-} ]] || ble-attach
-
-# Oh My Posh: load this repository's zen.toml so Bash uses the committed theme.
+# Oh My Posh: use the committed theme with the full Git Bash path.
+# Initialize it before ble-attach so ble.sh can wrap the finished prompt setup.
 if command -v oh-my-posh >/dev/null 2>&1; then
     _omp_theme='/d/config/bash/zen.toml'
-    [[ -f "$_omp_theme" ]] && eval "$(oh-my-posh init bash --config "$_omp_theme")"
+    if [[ -r "$_omp_theme" ]]; then
+        eval "$(oh-my-posh init bash --config "$_omp_theme")"
+    else
+        printf 'bash: Oh My Posh theme not found: %s\\n' "$_omp_theme" >&2
+    fi
     unset _omp_theme
 fi
+
+# ble.sh must attach at the end of .bashrc.
+[[ ! ${BLE_VERSION-} ]] || ble-attach
