@@ -2,8 +2,10 @@
 
 version = 4
 final_space = true
+console_title_template = '{{ .Shell }} in {{ .Folder }}'
 
-# First line: location and local Git state.
+# Bash does not have a supported Oh My Posh Vi mode integration or rprompt.
+# Keep execution time on the primary prompt instead of relying on either.
 [[blocks]]
   type = 'prompt'
   alignment = 'left'
@@ -12,29 +14,35 @@ final_space = true
   [[blocks.segments]]
     type = 'path'
     style = 'plain'
-    foreground = '#A7C080'
     background = 'transparent'
+    foreground = '#A7C080'
     template = '{{ .Path }}'
 
     [blocks.segments.properties]
-      style = 'agnoster_git'
-      max_width = 42
-      folder_icon = '…'
-      folder_separator_icon = '/'
+      style = 'full'
 
   [[blocks.segments]]
     type = 'git'
     style = 'plain'
     foreground = '#7A8478'
     background = 'transparent'
-    template = '  {{ .HEAD }}{{ if .Staging.Changed }} +{{ end }}{{ if .Working.Changed }} *{{ end }}'
+    template = ' {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>'
 
     [blocks.segments.properties]
       branch_icon = ''
       commit_icon = '@'
-      resolve_rebase_target = false
+      fetch_status = true
 
-# Second line: input arrow.
+  [[blocks.segments]]
+    type = 'executiontime'
+    style = 'plain'
+    foreground = '#D3C6AA'
+    background = 'transparent'
+    template = ' · ◷ {{ .FormattedMs }}'
+
+    [blocks.segments.properties]
+      threshold = 1000
+
 [[blocks]]
   type = 'prompt'
   alignment = 'left'
@@ -44,10 +52,17 @@ final_space = true
     type = 'text'
     style = 'plain'
     foreground_templates = [
-      '{{if gt .Code 0}}#E67E80{{else}}#A7C080{{end}}',
+      '{{if gt .Code 0}}#E67E80{{else}}#D699B6{{end}}',
     ]
     background = 'transparent'
-    template = '❯ '
+    template = '❯'
+
+[transient_prompt]
+  foreground_templates = [
+    '{{if gt .Code 0}}#E67E80{{else}}#D699B6{{end}}',
+  ]
+  background = 'transparent'
+  template = '❯ '
 
 [secondary_prompt]
   foreground = '#D699B6'
