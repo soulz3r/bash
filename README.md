@@ -10,16 +10,22 @@ WezTerm launches Git Bash with this repository's `.bashrc`:
 C:/Program Files/Git/bin/bash.exe --rcfile /d/config/bash/.bashrc -i
 ```
 
-The config keeps Bash history, Git shortcuts, fzf workflows and optional tool integrations. It initializes fzf's native Bash key bindings when fzf is installed, then loads Oh My Posh from the repository's `zen.toml` at `/d/config/bash/zen.toml`.
+The config keeps Bash history, Git shortcuts, fzf workflows and optional tool integrations. It initializes fzf's native Bash key bindings when fzf is installed, loads the selected Minmax fzf palette when available, and then loads Oh My Posh from the repository's `zen.toml` at `/d/config/bash/zen.toml`.
 
 ## Included tools
 
 - Oh My Posh with the shared path and Git prompt.
-- fzf defaults and native Bash key bindings (Ctrl+R, Ctrl+T, Alt+C).
+- fzf defaults, Minmax palette integration, and native Bash key bindings (Ctrl+R, Ctrl+T, Alt+C).
 - lsd directory listings, with a system `ls` fallback.
 - fd, ripgrep, bat, Neovim, YAP and zoxide integrations when installed.
 - Persistent Bash history.
 - Minimal Vim config in `.vimrc` (symlink it to `~/.vimrc`).
+
+## Terminal colors
+
+The shell uses a green-dominant `LS_COLORS` mapping: directories are bold bright green, executables are bold green, and source/configuration files use softer green. Amber is reserved for documentation and secondary emphasis; red marks errors and archives. The mapping uses standard ANSI color slots and does not require WezTerm-specific palette indexes.
+
+When `minmax.nvim` is present, Bash loads its phosphor fzf palette by default. Set `MINMAX_DIR` if the theme repository is outside the detected locations, or set `MINMAX_FZF_VARIANT` to `mono`, `amber`, or `oxide` to select another fzf variant. The fzf theme files live in `minmax.nvim/ports/fzf/`.
 
 ## Vim configuration
 
@@ -61,4 +67,4 @@ Bash does not have Fish-style abbreviation expansion. The same command names are
 | `fbr`, `fbd`, `fshow` | interactive Git branch and commit tools |
 | `fmenu` | small fzf action menu |
 
-Optional tools are checked before their integrations are enabled. Missing tools do not prevent the shell from starting.
+Optional tools are checked before their integrations are enabled. Missing tools do not prevent the shell from starting. `fd` is preferred for file discovery, with ripgrep or standard utilities used where supported. `lsd` is preferred for directory listings, with the system `ls` as a fallback.
